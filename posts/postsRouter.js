@@ -36,4 +36,18 @@ router.get("/:id", (req, res) => {
     });
 });
 
+router.delete("/:id", (req, res) => {
+  Posts.remove(req.params.id)
+    .then(count => {
+      if (count > 0) {
+        res.status(201).json(`${count} posts have been deleted`);
+      } else {
+        res.status(404).json("The post could not be found");
+      }
+    })
+    .catch(error => {
+      res.status(500).json("Error deleting post");
+    });
+});
+
 module.exports = router;
